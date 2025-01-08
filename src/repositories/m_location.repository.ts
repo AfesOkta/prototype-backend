@@ -10,7 +10,7 @@ export class MLocationRepository extends BaseRepository<MLocation> {
   }
 
   // Custom query example: find by cash account code
-  async findByCashAccountCode(code: string): Promise<MLocation | null> {
+  async findLocationByCode(code: string): Promise<MLocation | null> {
     return this.findOne({ where: { locationCode: code } });
   }
 }

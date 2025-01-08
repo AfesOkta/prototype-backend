@@ -10,7 +10,7 @@ export class MPaymentTypeRepository extends BaseRepository<MPaymentType> {
   }
 
   // Custom query example: find by cash account code
-  async findByCashAccountCode(code: string): Promise<MPaymentType | null> {
+  async findPaymenttypeByCode(code: string): Promise<MPaymentType | null> {
     return this.findOne({
       where: { paymentTypeCode: code },
       relations: ['cashAccount'],

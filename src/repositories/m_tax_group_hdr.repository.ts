@@ -9,13 +9,13 @@ export class MTaxGroupHdrRepository extends BaseRepository<MTaxGroupHdr> {
     super(MTaxGroupHdr, dataSource);
   }
 
-  async findByTaxGroupCode(
+  async findTaxGroupByCode(
     taxTypeGroupCode: string,
   ): Promise<MTaxGroupHdr | null> {
     return this.findOne({ where: { taxTypeGroupCode } });
   }
 
-  async findByTaxGroupCodeOrName(
+  async findTaxGroupByCodeOrName(
     taxTypeGroupCode: string,
     taxTypeGroupName: string,
   ): Promise<MTaxGroupHdr | null> {

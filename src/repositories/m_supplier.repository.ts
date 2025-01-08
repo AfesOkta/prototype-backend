@@ -9,7 +9,7 @@ export class MSupplierRepository extends BaseRepository<MSupplier> {
     super(MSupplier, dataSource);
   }
 
-  async findBySupplierCode(suppCode: string): Promise<MSupplier | null> {
+  async findSupplierByCode(suppCode: string): Promise<MSupplier | null> {
     return this.findOne({ where: { suppCode } });
   }
 }

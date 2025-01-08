@@ -10,7 +10,7 @@ export class MCustomerRepository extends BaseRepository<MCustomer> {
   }
 
   // Custom query example: find by cash account code
-  async findByCashAccountCode(code: string): Promise<MCustomer | null> {
+  async findCustomerByCode(code: string): Promise<MCustomer | null> {
     return this.findOne({ where: { custCode: code } });
   }
 }

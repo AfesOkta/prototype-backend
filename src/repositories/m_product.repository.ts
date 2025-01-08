@@ -10,7 +10,7 @@ export class MProductRepository extends BaseRepository<MProduct> {
   }
 
   // Custom query example: find by cash account code
-  async findByCashAccountCode(code: string): Promise<MProduct | null> {
+  async findProductByCode(code: string): Promise<MProduct | null> {
     return this.findOne({
       where: { productCode: code },
       relations: ['unit'],
