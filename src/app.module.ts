@@ -10,6 +10,7 @@ import { MProductModule } from './modules/m_product/m_product.module';
 import { MSupplierModule } from './modules/m_supplier/m_supplier.module';
 import { MTaxGroupDtlModule } from './modules/m_tax_group_dtl/m_tax_group_dtl.module';
 import { MTaxGroupHdrModule } from './modules/m_tax_group_hdr/m_tax_group_hdr.module';
+import { MTaxTypeModule } from './modules/m_tax_type/m_tax_type.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { MTaxGroupHdrModule } from './modules/m_tax_group_hdr/m_tax_group_hdr.mo
     MSupplierModule,
     MTaxGroupDtlModule,
     MTaxGroupHdrModule,
+    MTaxTypeModule,
   ],
 })
 export class AppModule {}
