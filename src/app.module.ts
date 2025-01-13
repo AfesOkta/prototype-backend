@@ -11,6 +11,7 @@ import { MSupplierModule } from './modules/m_supplier/m_supplier.module';
 import { MTaxGroupDtlModule } from './modules/m_tax_group_dtl/m_tax_group_dtl.module';
 import { MTaxGroupHdrModule } from './modules/m_tax_group_hdr/m_tax_group_hdr.module';
 import { MTaxTypeModule } from './modules/m_tax_type/m_tax_type.module';
+import { MUnitModule } from './modules/m_unit/m_unit.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { MTaxTypeModule } from './modules/m_tax_type/m_tax_type.module';
     MTaxGroupDtlModule,
     MTaxGroupHdrModule,
     MTaxTypeModule,
+    MUnitModule,
   ],
 })
 export class AppModule {}
