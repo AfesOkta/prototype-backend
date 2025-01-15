@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
@@ -12,6 +13,7 @@ import { MTaxGroupDtlModule } from './modules/m_tax_group_dtl/m_tax_group_dtl.mo
 import { MTaxGroupHdrModule } from './modules/m_tax_group_hdr/m_tax_group_hdr.module';
 import { MTaxTypeModule } from './modules/m_tax_type/m_tax_type.module';
 import { MUnitModule } from './modules/m_unit/m_unit.module';
+import { ormConfig } from './data-source';
 
 @Module({
   imports: [
@@ -19,16 +21,9 @@ import { MUnitModule } from './modules/m_unit/m_unit.module';
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
-      useFactory: async () => ({
-        type: 'postgres',
-        host: process.env.DATABASE_HOST,
-        port: parseInt(process.env.DATABASE_PORT),
-        username: process.env.DATABASE_USERNAME,
-        password: process.env.DATABASE_PASSWORD,
-        database: process.env.DATABASE_NAME,
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: process.env.DATABASE_SYNC === 'true',
-      }),
+      useFactory: async () => {
+        return ormConfig;
+      }
     }),
     MBankModule,
     MCashAccountModule,
