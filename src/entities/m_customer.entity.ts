@@ -1,16 +1,7 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, BaseEntity } from 'typeorm';
 
 @Entity('m_customer')
-export class MCustomer {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class MCustomer extends BaseEntity {
   @Column({ type: 'varchar', length: 15, nullable: true })
   custCode: string;
 
@@ -28,16 +19,4 @@ export class MCustomer {
 
   @Column({ type: 'int', nullable: true })
   custStatus: number;
-
-  @Column({ type: 'int', nullable: true })
-  createdBy: number;
-
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdTime: Date;
-
-  @Column({ type: 'int', nullable: true })
-  updatedBy: number;
-
-  @UpdateDateColumn({ type: 'timestamp', nullable: true })
-  updatedTime: Date;
 }

@@ -1,19 +1,8 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { MUnit } from './m_unit.entity';
 
 @Entity('m_product')
-export class MProduct {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class MProduct extends BaseEntity {
   @Column({ type: 'varchar', length: 15, nullable: true })
   productCode: string;
 
@@ -50,16 +39,4 @@ export class MProduct {
 
   @Column({ type: 'int', nullable: true })
   productStatus: number;
-
-  @Column({ type: 'int', nullable: true })
-  createdBy: number;
-
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdTime: Date;
-
-  @Column({ type: 'int', nullable: true })
-  updatedBy: number;
-
-  @UpdateDateColumn({ type: 'timestamp', nullable: true })
-  updatedTime: Date;
 }
