@@ -1,22 +1,45 @@
-/* eslint-disable prettier/prettier */
-import * as dotenv from 'dotenv';
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
+import 'dotenv/config';
+// import { join } from 'node:path';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+// import { MBank } from './entities/m_bank.entity';
+// import { MCashAccount } from './entities/m_cash_account.entity';
+// import { MCustomer } from './entities/m_customer.entity';
+// import { MLocation } from './entities/m_location.entity';
+// import { MPaymentType } from './entities/m_payment_type.entity';
+// import { MProduct } from './entities/m_product.entity';
+// import { MSupplier } from './entities/m_supplier.entity';
+// import { MTaxGroupDtl } from './entities/m_tax_group_dtl.entity';
+// import { MTaxGroupHdr } from './entities/m_tax_group_hdr.entity';
+// import { MUnit } from './entities/m_unit.entity';
+// import { MTaxType } from './entities/m_tax_type.entity';
 
-dotenv.config(); // Load environment variables
-
-// DataSource configuration
-const typeOrmConfig: TypeOrmModuleOptions = {
-  type: 'postgres', // Your database type (PostgreSQL in this case)
-  host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT, 10),
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  entities: ['./src/entities/*.entity{.ts,.js}'], // Add your entities here
-  synchronize: false, // Set to false in production; use migrations instead
-  logging: true, // Optional, for logging SQL queries
-  migrations: ['./src/migrations/**/*{.ts,.js}'], // Path to your migration files
-  migrationsRun: true, // Automatically run migrations at startup
+export const ormConfig: PostgresConnectionOptions = {
+  type: 'postgres',
+  host: process.env.DATABASE_HOST,
+  port: +process.env.DATABASE_PORT,
+  username: process.env.DATABASE_USERNAME,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
+  synchronize: false,
+  // entities: [
+  //   MBank,
+  //   MCashAccount,
+  //   MCustomer,
+  //   MLocation,
+  //   MPaymentType,
+  //   MUnit,
+  //   MProduct,
+  //   MSupplier,
+  //   MTaxType,
+  //   MTaxGroupHdr,
+  //   MTaxGroupDtl,
+  // ],
+  entities: [__dirname + '/**/*.entity{.ts,.js}'],
+  // entities: [User, Post, Profile],
+  migrations: [__dirname + '/migrations/*.{ts,js}'],
+  subscribers: [],
+  logging: true,
 };
 
-export default typeOrmConfig;
+export default new DataSource({ ...ormConfig });

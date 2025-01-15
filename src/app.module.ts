@@ -13,14 +13,18 @@ import { MTaxGroupDtlModule } from './modules/m_tax_group_dtl/m_tax_group_dtl.mo
 import { MTaxGroupHdrModule } from './modules/m_tax_group_hdr/m_tax_group_hdr.module';
 import { MTaxTypeModule } from './modules/m_tax_type/m_tax_type.module';
 import { MUnitModule } from './modules/m_unit/m_unit.module';
-import dataSource from './data-source';
+import { ormConfig } from './data-source';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot(dataSource),
+    TypeOrmModule.forRootAsync({
+      useFactory: async () => {
+        return ormConfig;
+      }
+    }),
     MBankModule,
     MCashAccountModule,
     MCustomerModule,
