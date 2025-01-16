@@ -1,5 +1,7 @@
-import { Entity, Column, ManyToOne, JoinColumn, BaseEntity } from 'typeorm';
+/* eslint-disable prettier/prettier */
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { MBank } from './m_bank.entity';
+import { BaseEntity } from '../base/base_entity.entity';
 
 @Entity('m_cash_account')
 export class MCashAccount extends BaseEntity {

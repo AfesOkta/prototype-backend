@@ -1,6 +1,7 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+/* eslint-disable prettier/prettier */
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { MCashAccount } from './m_cash_account.entity';
-
+import { BaseEntity } from '../base/base_entity.entity';
 @Entity('m_payment_type')
 export class MPaymentType extends BaseEntity {
   @Column({ type: 'varchar', length: 15, nullable: true })

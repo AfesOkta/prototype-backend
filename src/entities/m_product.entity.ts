@@ -1,6 +1,7 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+/* eslint-disable prettier/prettier */
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { MUnit } from './m_unit.entity';
-
+import { BaseEntity } from '../base/base_entity.entity';
 @Entity('m_product')
 export class MProduct extends BaseEntity {
   @Column({ type: 'varchar', length: 15, nullable: true })

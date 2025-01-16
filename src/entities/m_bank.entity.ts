@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { BaseEntity } from '../base/base_entity.entity';
 import { Entity, Column } from 'typeorm';
 

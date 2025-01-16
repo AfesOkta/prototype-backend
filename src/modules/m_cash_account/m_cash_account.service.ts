@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { MCashAccountRepository } from '../../repositories/m_cash_account.repository';
 import { MCashAccount } from '../../entities/m_cash_account.entity';

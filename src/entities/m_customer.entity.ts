@@ -1,5 +1,5 @@
-import { Entity, Column, BaseEntity } from 'typeorm';
-
+import { Entity, Column } from 'typeorm';
+import { BaseEntity } from '../base/base_entity.entity';
 @Entity('m_customer')
 export class MCustomer extends BaseEntity {
   @Column({ type: 'varchar', length: 15, nullable: true })

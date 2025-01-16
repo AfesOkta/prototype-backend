@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { DataSource } from 'typeorm';
 import 'dotenv/config';
 // import { join } from 'node:path';
