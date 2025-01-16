@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { BaseRepository } from '../base/base_reepository.repository';
 import { MUnit } from 'src/entities/m_unit.entity';
@@ -16,5 +17,16 @@ export class MUnitRepository extends BaseRepository<MUnit> {
     return this.findOne({
       where: [{ unitCode }, { unitName }],
     });
+  }
+  
+  async findExistUnit(id: number): Promise<boolean> {
+    const count = await this.dataSource
+      .getRepository(MUnit)
+      .createQueryBuilder('unit')
+      .innerJoin('unit.m_products', 'product')
+      .where('unit.id = :id', { id })
+      .getCount();
+
+    return count > 0;
   }
 }

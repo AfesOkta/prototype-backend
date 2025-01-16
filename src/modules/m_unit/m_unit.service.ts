@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { BaseService } from 'src/base/base_service.service';
 import { MUnit } from 'src/entities/m_unit.entity';
@@ -42,6 +43,10 @@ export class MUnitService extends BaseService<MUnit> {
   }
 
   async deleteUnit(id: number): Promise<void> {
+    const existsUnit = await this.unitRepository.findExistUnit(id);
+    if(existsUnit) {
+      throw new Error('Unit is already used in product');
+    }
     await this.unitRepository.delete(id);
   }
 }
