@@ -5,10 +5,10 @@ import { MTaxGroupHdr } from './m_tax_group_hdr.entity';
 
 @Entity('m_tax_group_dtl')
 export class MTaxGroupDtl extends BaseEntity {
-  @Column({ type: 'int', nullable: true })
+  @Column({ name: 'tax_group_hdr_id', type: 'int', nullable: true })
   taxGroupHdrId: number;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ name: 'tax_type_id', type: 'int', nullable: true })
   taxTypeId: number;
 
   @ManyToOne(() => MTaxType)

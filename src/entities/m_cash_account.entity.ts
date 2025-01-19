@@ -5,13 +5,13 @@ import { BaseEntity } from '../base/base_entity.entity';
 
 @Entity('m_cash_account')
 export class MCashAccount extends BaseEntity {
-  @Column({ type: 'varchar', length: 15, nullable: true })
+  @Column({ name:"cash_account_code", type: 'varchar', length: 15, nullable: true })
   cashAccountCode: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true })
+  @Column({ name:"cash_account_name",type: 'varchar', length: 100, nullable: true })
   cashAccountName: string;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ name:"bank_id", type: 'int', nullable: true })
   bankId: number;
 
   @ManyToOne(() => MBank)

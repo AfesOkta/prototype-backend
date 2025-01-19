@@ -9,15 +9,19 @@ export abstract class BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ name: 'created_by', type: 'int', nullable: true })
   createdBy: number;
 
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn({
+    name: 'created_time',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   createdTime: Date;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ name: 'updated_by', type: 'int', nullable: true })
   updatedBy: number;
 
-  @UpdateDateColumn({ type: 'timestamp', nullable: true })
+  @UpdateDateColumn({ name: 'updated_time', type: 'timestamp', nullable: true })
   updatedTime: Date;
 }

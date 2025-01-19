@@ -4,9 +4,9 @@ import { Entity, Column } from 'typeorm';
 
 @Entity('m_bank')
 export class MBank extends BaseEntity {
-  @Column({ type: 'varchar', length: 5, nullable: true })
+  @Column({ name:"bank_code", type: 'varchar', length: 5, nullable: true })
   bankCode: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true })
+  @Column({ name:"bank_name",type: 'varchar', length: 100, nullable: true })
   bankName: string;
 }
