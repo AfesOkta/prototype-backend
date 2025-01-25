@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { BaseEntity } from 'src/base/base_entity.entity';
 import { Entity, Column, CreateDateColumn } from 'typeorm';
 
@@ -9,9 +10,11 @@ export class TCashBankHdr extends BaseEntity {
     length: 50,
     nullable: false,
   })
+  @ApiProperty({ example: '2025012600001', description: 'Kode Cash/Bank' })
   cashbankCode: string;
 
   @Column({ name: 'cashbank_date', type: 'timestamp', nullable: false })
+  @ApiProperty({ example: '2025-01-26', description: 'Tanggal Cash/Bank' })
   cashbankDate: Date;
 
   @Column({
@@ -20,6 +23,7 @@ export class TCashBankHdr extends BaseEntity {
     length: 50,
     nullable: false,
   })
+  @ApiProperty({ example: 'Tunai', description: 'Cash/Bank Type' })
   cashbankType: string;
 
   @Column({
@@ -29,9 +33,11 @@ export class TCashBankHdr extends BaseEntity {
     scale: 2,
     nullable: false,
   })
+  @ApiProperty({ example: '50000', description: 'Total Amount' })
   cashbankAmount: number;
 
   @Column({ name: 'cashbank_desc', type: 'text', nullable: true })
+  @ApiProperty({ example: '-', description: 'Description cash/bank' })
   cashbankDesc: string;
 
   @Column({
@@ -40,6 +46,7 @@ export class TCashBankHdr extends BaseEntity {
     length: 50,
     nullable: false,
   })
+  @ApiProperty({ example: 'Lunas', description: 'Status cash/bank' })
   cashbankStatus: string;
 
   @Column({
@@ -48,18 +55,26 @@ export class TCashBankHdr extends BaseEntity {
     length: 50,
     nullable: true,
   })
+  @ApiProperty({ example: '1', description: 'User deleted' })
   cashbankDeletedBy: string;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @ApiProperty({
+    example: '2025-01-26 00:49:59',
+    description: 'Tanggal user deleted',
+  })
   cashbankDeletedAt: Date;
 
   @Column({ name: 'cashbank_is_deleted', type: 'boolean', nullable: false })
+  @ApiProperty({ example: 'True', description: 'Status deleted' })
   cashbankIsDeleted: boolean;
 
   @Column({ name: 'cashbank_is_active', type: 'boolean', nullable: false })
+  @ApiProperty({ example: 'True', description: 'Status Active' })
   cashbankIsActive: boolean;
 
   @Column({ name: 'cashbank_is_reconciled', type: 'boolean', nullable: false })
+  @ApiProperty({ example: 'True', description: 'Status reconsialised' })
   cashbankIsReconciled: boolean;
 
   @Column({
@@ -68,5 +83,6 @@ export class TCashBankHdr extends BaseEntity {
     length: 50,
     nullable: true,
   })
+  @ApiProperty({ example: '1', description: 'User reconsialised' })
   cashbankReconc;
 }
