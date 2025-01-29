@@ -9,17 +9,31 @@ import {
 } from '@nestjs/common';
 import { MTaxGroupHdrService } from './m_tax_group_hdr.service';
 import { MTaxGroupHdr } from 'src/entities/m_tax_group_hdr.entity';
+import { ApiBody, ApiParam, ApiResponse, ApiOperation } from '@nestjs/swagger';
 
 @Controller('taxGroupHdr')
 export class MTaxGroupHdrController {
   constructor(private readonly taxGroupHdrService: MTaxGroupHdrService) {}
 
   @Get()
+  @ApiOperation({ summary: 'Ambil semua data tax group header' })
+  @ApiResponse({
+    status: 200,
+    description: 'Berhasil mengambil data.',
+    type: [MTaxGroupHdr],
+  })
   async getAllTaxGroupHdrs(): Promise<MTaxGroupHdr[]> {
     return this.taxGroupHdrService.getAllTaxGroupHdr();
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Ambil data tax group header berdasarkan ID' })
+  @ApiParam({ name: 'id', type: Number, description: 'ID tax group header' })
+  @ApiResponse({
+    status: 200,
+    description: 'Data ditemukan.',
+    type: MTaxGroupHdr,
+  })
   async getAllTaxGroupHdrById(
     @Param('id') id: number,
   ): Promise<MTaxGroupHdr | null> {
@@ -27,13 +41,31 @@ export class MTaxGroupHdrController {
   }
 
   @Post()
-  async createPayment(
+  @ApiOperation({ summary: 'Buat data tax group header baru' })
+  @ApiBody({ type: MTaxGroupHdr })
+  @ApiResponse({
+    status: 201,
+    description: 'Tax group berhasil dibuat.',
+    type: MTaxGroupHdr,
+  })
+  async createTaxGroupHeader(
     @Body() TaxGroupHdrData: Partial<MTaxGroupHdr>,
   ): Promise<MTaxGroupHdr> {
     return this.taxGroupHdrService.createTaxGroupHdr(TaxGroupHdrData);
   }
 
   @Get('code/:TaxGroupHdrCode')
+  @ApiOperation({ summary: 'Ambil data tax group header berdasarkan kode' })
+  @ApiParam({
+    name: 'TaxGroupHdrCode',
+    type: String,
+    description: 'Kode tax group header',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Data ditemukan.',
+    type: MTaxGroupHdr,
+  })
   async getTaxGroupHdrByCode(
     @Param('TaxGroupHdrCode') TaxGroupHdrCode: string,
   ): Promise<MTaxGroupHdr | null> {
@@ -41,6 +73,24 @@ export class MTaxGroupHdrController {
   }
 
   @Get('code')
+  @ApiOperation({
+    summary: 'Ambil data tax group header berdasarkan kode atau nama',
+  })
+  @ApiParam({
+    name: 'TaxGroupHdrCode',
+    type: String,
+    description: 'Kode tax group header',
+  })
+  @ApiParam({
+    name: 'TaxTypeGroupName',
+    type: String,
+    description: 'Nama tax group header',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Data ditemukan.',
+    type: MTaxGroupHdr,
+  })
   async getTaxGroupHdrByCodeOrName(
     @Param('TaxGroupHdrCode') TaxGroupHdrCode: string,
     @Param('TaxTypeGroupName') TaxTypeGroupName: string,
@@ -53,6 +103,14 @@ export class MTaxGroupHdrController {
 
   // Update a TaxGroupHdr
   @Put(':id')
+  @ApiOperation({ summary: 'Perbarui data tax group header berdasarkan ID' })
+  @ApiParam({ name: 'id', type: Number, description: 'ID tax group header' })
+  @ApiBody({ type: MTaxGroupHdr })
+  @ApiResponse({
+    status: 200,
+    description: 'Tax group header berhasil diperbarui.',
+    type: MTaxGroupHdr,
+  })
   async updateTaxGroupHdr(
     @Param('id') id: number,
     @Body() TaxGroupHdrData: Partial<MTaxGroupHdr>,
@@ -62,6 +120,14 @@ export class MTaxGroupHdrController {
 
   // Delete a TaxGroupHdr
   @Delete(':id')
+  @ApiOperation({
+    summary: 'Hapus data tax group header berdasarkan ID',
+  })
+  @ApiParam({ name: 'id', type: Number, description: 'ID tax group header' })
+  @ApiResponse({
+    status: 200,
+    description: 'Tax group header berhasil dihapus.',
+  })
   async deleteTaxGroupHdr(@Param('id') id: number): Promise<void> {
     return this.taxGroupHdrService.deleteTaxGroupHdr(id);
   }

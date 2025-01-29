@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DataSource } from 'typeorm';
 import { ormConfig } from './data-source';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -30,6 +31,19 @@ async function bootstrap() {
       console.log('Migrations completed.');
     }
   }
+
+  // Konfigurasi Swagger
+  const config = new DocumentBuilder()
+    .setTitle('Minipos API')
+    .setDescription('API untuk mengelola data Minipos')
+    .setVersion('1.0')
+    .addTag('banks', 'API untuk mengelola data bank')
+    .addTag('cash/bank account', 'API untuk mengelola data cash/bank Account')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
