@@ -38,7 +38,7 @@ export class AuthService {
         password: hashedPassword,
         email: username,
         firstName: 'John',
-        lastName: 'Doe',         
+        lastName: 'Doe',
       });
     } catch (error) {
       if (error.code === '23505') {
