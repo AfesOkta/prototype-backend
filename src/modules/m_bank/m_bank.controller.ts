@@ -6,6 +6,7 @@ import {
   Param,
   Put,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { MBank } from 'src/entities/m_bank.entity';
 import { MBankService } from 'src/modules/m_bank/m_bank.service';
@@ -16,11 +17,13 @@ import {
   ApiResponse,
   ApiBody,
 } from '@nestjs/swagger';
-@ApiTags('banks')
-@Controller('banks')
+import { AuthGuard } from '@nestjs/passport';
+@ApiTags('api/v1/banks')
+@Controller('api/v1/banks')
 export class MBankController {
   constructor(private readonly bankService: MBankService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data bank' })
   @ApiResponse({

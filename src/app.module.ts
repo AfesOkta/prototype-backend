@@ -14,6 +14,8 @@ import { MTaxGroupHdrModule } from './modules/m_tax_group_hdr/m_tax_group_hdr.mo
 import { MTaxTypeModule } from './modules/m_tax_type/m_tax_type.module';
 import { MUnitModule } from './modules/m_unit/m_unit.module';
 import { ormConfig } from './data-source';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -36,6 +38,8 @@ import { ormConfig } from './data-source';
     MTaxGroupHdrModule,
     MTaxTypeModule,
     MUnitModule,
+    AuthModule,
+    UserModule,
   ],
 })
 export class AppModule {}
