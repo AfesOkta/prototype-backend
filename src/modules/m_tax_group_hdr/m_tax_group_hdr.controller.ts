@@ -6,15 +6,25 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { MTaxGroupHdrService } from './m_tax_group_hdr.service';
 import { MTaxGroupHdr } from 'src/entities/m_tax_group_hdr.entity';
-import { ApiBody, ApiParam, ApiResponse, ApiOperation } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiParam,
+  ApiResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('taxGroupHdr')
+@ApiTags('taxgroup-hdr')
+@Controller('/api/v1/taxgroup-hdr')
 export class MTaxGroupHdrController {
   constructor(private readonly taxGroupHdrService: MTaxGroupHdrService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data tax group header' })
   @ApiResponse({
@@ -26,6 +36,7 @@ export class MTaxGroupHdrController {
     return this.taxGroupHdrService.getAllTaxGroupHdr();
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data tax group header berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID tax group header' })
@@ -40,6 +51,7 @@ export class MTaxGroupHdrController {
     return this.taxGroupHdrService.getTaxGroupHdrById(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data tax group header baru' })
   @ApiBody({ type: MTaxGroupHdr })
@@ -54,6 +66,7 @@ export class MTaxGroupHdrController {
     return this.taxGroupHdrService.createTaxGroupHdr(TaxGroupHdrData);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('code/:TaxGroupHdrCode')
   @ApiOperation({ summary: 'Ambil data tax group header berdasarkan kode' })
   @ApiParam({
@@ -72,6 +85,7 @@ export class MTaxGroupHdrController {
     return this.taxGroupHdrService.getTaxGroupHdrByCode(TaxGroupHdrCode);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('code')
   @ApiOperation({
     summary: 'Ambil data tax group header berdasarkan kode atau nama',
@@ -102,6 +116,7 @@ export class MTaxGroupHdrController {
   }
 
   // Update a TaxGroupHdr
+  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data tax group header berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID tax group header' })
@@ -119,6 +134,7 @@ export class MTaxGroupHdrController {
   }
 
   // Delete a TaxGroupHdr
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({
     summary: 'Hapus data tax group header berdasarkan ID',

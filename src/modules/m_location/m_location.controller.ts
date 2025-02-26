@@ -6,15 +6,25 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { MLocationService } from './m_location.service';
 import { MLocation } from 'src/entities/m_location.entity';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('locations')
+@ApiTags('locations')
+@Controller('/api/v1/locations')
 export class MLocationController {
   constructor(private readonly locationService: MLocationService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data Location' })
   @ApiResponse({
@@ -26,6 +36,7 @@ export class MLocationController {
     return this.locationService.getAllLocation();
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data location berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'Id location' })
@@ -38,6 +49,7 @@ export class MLocationController {
     return this.locationService.getLocationById(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data location baru' })
   @ApiBody({ type: MLocation })
@@ -52,6 +64,7 @@ export class MLocationController {
     return this.locationService.createLocation(LocationData);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('code/:LocationCode')
   @ApiOperation({ summary: 'Ambil data location berdasarkan kode location' })
   @ApiParam({ name: 'id', type: Number, description: 'Kode location' })
@@ -67,6 +80,7 @@ export class MLocationController {
   }
 
   // Update a Location
+  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data location berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'Id location' })
@@ -84,6 +98,7 @@ export class MLocationController {
   }
 
   // Delete a Location
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data location berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'Id location' })

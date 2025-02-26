@@ -6,15 +6,25 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { MCustomerService } from './m_customer.service';
 import { MCustomer } from 'src/entities/m_customer.entity';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('customers')
+@ApiTags('customers')
+@Controller('/api/v1/customers')
 export class MCustomerController {
   constructor(private readonly customerService: MCustomerService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data Customer' })
   @ApiResponse({
@@ -26,6 +36,7 @@ export class MCustomerController {
     return this.customerService.getAllCustomer();
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data customer berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'Id customer' })
@@ -38,6 +49,7 @@ export class MCustomerController {
     return this.customerService.getCustomerById(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data customer baru' })
   @ApiBody({ type: MCustomer })
@@ -52,6 +64,7 @@ export class MCustomerController {
     return this.customerService.createCustomer(customerData);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('code/:CustomerCode')
   @ApiOperation({ summary: 'Ambil data customer berdasarkan kode customer' })
   @ApiParam({
@@ -71,6 +84,7 @@ export class MCustomerController {
   }
 
   // Update a Customer
+  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data customer berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'Id customer' })
@@ -88,6 +102,7 @@ export class MCustomerController {
   }
 
   // Delete a Customer
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data customer berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'Id customer' })

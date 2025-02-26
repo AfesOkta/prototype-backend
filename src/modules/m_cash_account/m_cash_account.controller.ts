@@ -6,15 +6,25 @@ import {
   Delete,
   Param,
   Body,
+  UseGuards,
 } from '@nestjs/common';
 import { MCashAccountService } from './m_cash_account.service';
 import { MCashAccount } from '../../entities/m_cash_account.entity';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('cash-accounts')
+@ApiTags('cash-accounts')
+@Controller('/api/v1/cash-accounts')
 export class MCashAccountController {
   constructor(private readonly cashAccountService: MCashAccountService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data cash account baru' })
   @ApiBody({ type: MCashAccount })
@@ -29,6 +39,7 @@ export class MCashAccountController {
     return this.cashAccountService.createCashAccount(data);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data Cash Account' })
   @ApiResponse({
@@ -40,6 +51,7 @@ export class MCashAccountController {
     return this.cashAccountService.getAllCashAccounts();
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data cash account berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID cash account' })
@@ -54,6 +66,7 @@ export class MCashAccountController {
     return this.cashAccountService.getCashAccountById(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data cash account berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID Cash Account' })
@@ -70,6 +83,7 @@ export class MCashAccountController {
     return this.cashAccountService.updateCashAccount(id, data);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data cash account berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID Cash Account' })

@@ -6,15 +6,25 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { MTaxTypeService } from './m_tax_type.service';
 import { MTaxType } from 'src/entities/m_tax_type.entity';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('taxType')
+@ApiTags('tax-type')
+@Controller('api/v1/tax-type')
 export class MTaxTypeController {
   constructor(private readonly taxTypeService: MTaxTypeService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data tax types' })
   @ApiResponse({
@@ -26,6 +36,7 @@ export class MTaxTypeController {
     return this.taxTypeService.getAllTaxType();
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data tax types berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID tax types' })
@@ -38,6 +49,7 @@ export class MTaxTypeController {
     return this.taxTypeService.getTaxTypeById(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data tax types baru' })
   @ApiBody({ type: MTaxType })
@@ -52,6 +64,7 @@ export class MTaxTypeController {
     return this.taxTypeService.createTaxType(TaxTypeData);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('code')
   @ApiOperation({ summary: 'Ambil data tax types berdasarkan kode or nama' })
   @ApiParam({
@@ -80,6 +93,7 @@ export class MTaxTypeController {
   }
 
   // Update a TaxType
+  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data tax types berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID tax types' })
@@ -97,6 +111,7 @@ export class MTaxTypeController {
   }
 
   // Delete a TaxType
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data tax types berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID tax types' })

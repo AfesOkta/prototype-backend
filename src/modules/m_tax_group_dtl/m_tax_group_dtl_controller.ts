@@ -6,15 +6,25 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { MTaxGroupDtlService } from './m_tax_group_dtl.service';
 import { MTaxGroupDtl } from 'src/entities/m_tax_group_dtl.entity';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('taxGroupDtl')
+@ApiTags('taxgroup-dtl')
+@Controller('/api/v1/taxgroup-dtl')
 export class MTaxGroupDtlController {
   constructor(private readonly taxGroupDtlService: MTaxGroupDtlService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data tax group detail' })
   @ApiResponse({
@@ -26,6 +36,7 @@ export class MTaxGroupDtlController {
     return this.taxGroupDtlService.getAllTaxGroupDtl();
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data tax group detail berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID tax group detail' })
@@ -40,6 +51,7 @@ export class MTaxGroupDtlController {
     return this.taxGroupDtlService.getTaxGroupDtlById(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data tax group detail baru' })
   @ApiBody({ type: MTaxGroupDtl })
@@ -54,6 +66,7 @@ export class MTaxGroupDtlController {
     return this.taxGroupDtlService.createTaxGroupDtl(TaxGroupDtlData);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('code/:taxType')
   @ApiOperation({
     summary: 'Ambil data tax group detail berdasarkan id tax type',
@@ -70,6 +83,7 @@ export class MTaxGroupDtlController {
     return this.taxGroupDtlService.findTaxGroupDtlByType(taxType);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('code/:hdr')
   @ApiOperation({
     summary: 'Ambil data tax group detail berdasarkan id header',
@@ -87,6 +101,7 @@ export class MTaxGroupDtlController {
   }
 
   // Update a Supplier
+  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data tax group detail berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID tax group detail' })
@@ -104,6 +119,7 @@ export class MTaxGroupDtlController {
   }
 
   // Delete a Supplier
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data tax group detail berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID tax group detail' })

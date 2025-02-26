@@ -6,15 +6,25 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { MSupplierService } from './m_supplier.service';
 import { MSupplier } from 'src/entities/m_supplier.entity';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('suppliers')
+@ApiTags('suppliers')
+@Controller('/api/v1/suppliers')
 export class MSupplierController {
   constructor(private readonly supplierService: MSupplierService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data supplier' })
   @ApiResponse({
@@ -26,6 +36,7 @@ export class MSupplierController {
     return this.supplierService.getAllSupplier();
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data supplier berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID supplier' })
@@ -38,6 +49,7 @@ export class MSupplierController {
     return this.supplierService.getSupplierById(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data supplier baru' })
   @ApiBody({ type: MSupplier })
@@ -52,6 +64,7 @@ export class MSupplierController {
     return this.supplierService.createSupplier(SupplierData);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('code/:SupplierCode')
   @ApiOperation({ summary: 'Ambil data supplier berdasarkan kode supplier' })
   @ApiParam({
@@ -71,6 +84,7 @@ export class MSupplierController {
   }
 
   // Update a Supplier
+  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data supplier berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID supplier' })
@@ -88,6 +102,7 @@ export class MSupplierController {
   }
 
   // Delete a Supplier
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data supplier berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'Id supplier' })

@@ -6,15 +6,25 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { MPaymentType } from 'src/entities/m_payment_type.entity';
 import { MPaymentTypeService } from './m_payment_type.service';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('paymentTypes')
+@ApiTags('payment-types')
+@Controller('/api/v1/paymentTypes')
 export class MPaymentTypeController {
   constructor(private readonly paymenTypeService: MPaymentTypeService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data payment type' })
   @ApiResponse({
@@ -26,6 +36,7 @@ export class MPaymentTypeController {
     return this.paymenTypeService.getAllPaymentType();
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data payment type berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID payment type' })
@@ -40,6 +51,7 @@ export class MPaymentTypeController {
     return this.paymenTypeService.getPaymentTypeById(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data payment type baru' })
   @ApiBody({ type: MPaymentType })
@@ -54,6 +66,7 @@ export class MPaymentTypeController {
     return this.paymenTypeService.createPaymentType(PaymentTypeData);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('code/:PaymentTypeCode')
   @ApiOperation({ summary: 'Ambil data payment type berdasarkan kode' })
   @ApiParam({
@@ -73,6 +86,7 @@ export class MPaymentTypeController {
   }
 
   // Update a PaymentType
+  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data payment type berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'Id payment type' })
@@ -90,6 +104,7 @@ export class MPaymentTypeController {
   }
 
   // Delete a PaymentType
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data payment type berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID payment type' })

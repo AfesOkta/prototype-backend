@@ -18,7 +18,7 @@ import {
   ApiBody,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-@ApiTags('api/v1/banks')
+@ApiTags('banks')
 @Controller('api/v1/banks')
 export class MBankController {
   constructor(private readonly bankService: MBankService) {}
@@ -35,6 +35,7 @@ export class MBankController {
     return this.bankService.getAllBanks();
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data bank berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID Bank' })
@@ -43,6 +44,7 @@ export class MBankController {
     return this.bankService.getBankById(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data bank baru' })
   @ApiBody({ type: MBank })
@@ -55,6 +57,7 @@ export class MBankController {
     return this.bankService.createBank(bankData);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('code/:bankCode')
   @ApiOperation({ summary: 'Ambil data bank berdasarkan code' })
   @ApiParam({ name: 'bankCode', type: String, description: 'Kode Bank' })
@@ -66,6 +69,7 @@ export class MBankController {
   }
 
   // Update a bank
+  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data bank berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID Bank' })
@@ -83,11 +87,12 @@ export class MBankController {
   }
 
   // Delete a bank
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data bank berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID Bank' })
   @ApiResponse({ status: 200, description: 'Bank berhasil dihapus.' })
   async deleteBank(@Param('id') id: number): Promise<void> {
-    return this.bankService.deleteBank(id);
+    await this.bankService.deleteBank(id);
   }
 }

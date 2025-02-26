@@ -6,15 +6,25 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { MUnitService } from './m_unit.service';
 import { MUnit } from 'src/entities/m_unit.entity';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('unit')
+@ApiTags('units')
+@Controller('/api/v1/unit')
 export class MUnitController {
   constructor(private readonly UnitService: MUnitService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data unit' })
   @ApiResponse({
@@ -26,6 +36,7 @@ export class MUnitController {
     return this.UnitService.getAllUnit();
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data unit berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID unit' })
@@ -38,6 +49,7 @@ export class MUnitController {
     return this.UnitService.getUnitById(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data unit baru' })
   @ApiBody({ type: MUnit })
@@ -50,6 +62,7 @@ export class MUnitController {
     return this.UnitService.createUnit(UnitData);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('code')
   @ApiOperation({ summary: 'Ambil data unit berdasarkan kode atau nama' })
   @ApiParam({ name: 'UnitCode', type: String, description: 'Kode unit' })
@@ -67,6 +80,7 @@ export class MUnitController {
   }
 
   // Update a Unit
+  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data unit berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID unit' })
@@ -84,6 +98,7 @@ export class MUnitController {
   }
 
   // Delete a Unit
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data unit berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID unit' })

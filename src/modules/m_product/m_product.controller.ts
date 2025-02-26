@@ -6,15 +6,25 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { MProductService } from './m_product.service';
 import { MProduct } from 'src/entities/m_product.entity';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('products')
+@ApiTags('products')
+@Controller('/api/v1/products')
 export class MProductController {
   constructor(private readonly productService: MProductService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data product' })
   @ApiResponse({
@@ -26,6 +36,7 @@ export class MProductController {
     return this.productService.getAllProduct();
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data product berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID product' })
@@ -38,6 +49,7 @@ export class MProductController {
     return this.productService.getProductById(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data product baru' })
   @ApiBody({ type: MProduct })
@@ -52,6 +64,7 @@ export class MProductController {
     return this.productService.createProduct(ProductData);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('code/:ProductCode')
   @ApiOperation({ summary: 'Ambil data product berdasarkan kode product' })
   @ApiParam({ name: 'ProductCode', type: String, description: 'Kode product' })
@@ -67,6 +80,7 @@ export class MProductController {
   }
 
   // Update a Product
+  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data product berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID product' })
@@ -84,6 +98,7 @@ export class MProductController {
   }
 
   // Delete a Product
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data product berdasarkan ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID product' })
