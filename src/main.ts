@@ -37,12 +37,23 @@ async function bootstrap() {
     .setTitle('Minipos API')
     .setDescription('API untuk mengelola data Minipos')
     .setVersion('1.0')
-    .addTag('banks', 'API untuk mengelola data bank')
-    .addTag('cash/bank account', 'API untuk mengelola data cash/bank Account')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Enter JWT token',
+        in: 'header',
+      },
+      'JWT-auth', // This name should match the one used in the @ApiBearerAuth() decorator
+    )
     .build();
 
+  // const document = SwaggerModule.createDocument(app, config);
+  // SwaggerModule.setup('api', app, document);
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api/v1/docs', app, document);
 
   await app.listen(process.env.PORT ?? 3000);
 }

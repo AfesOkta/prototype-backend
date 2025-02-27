@@ -11,6 +11,7 @@ import {
 import { MPaymentType } from 'src/entities/m_payment_type.entity';
 import { MPaymentTypeService } from './m_payment_type.service';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -24,6 +25,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class MPaymentTypeController {
   constructor(private readonly paymenTypeService: MPaymentTypeService) {}
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data payment type' })
@@ -36,6 +38,7 @@ export class MPaymentTypeController {
     return this.paymenTypeService.getAllPaymentType();
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data payment type berdasarkan ID' })
@@ -51,6 +54,7 @@ export class MPaymentTypeController {
     return this.paymenTypeService.getPaymentTypeById(id);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data payment type baru' })
@@ -66,6 +70,7 @@ export class MPaymentTypeController {
     return this.paymenTypeService.createPaymentType(PaymentTypeData);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get('code/:PaymentTypeCode')
   @ApiOperation({ summary: 'Ambil data payment type berdasarkan kode' })
@@ -86,6 +91,7 @@ export class MPaymentTypeController {
   }
 
   // Update a PaymentType
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data payment type berdasarkan ID' })
@@ -104,6 +110,7 @@ export class MPaymentTypeController {
   }
 
   // Delete a PaymentType
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data payment type berdasarkan ID' })

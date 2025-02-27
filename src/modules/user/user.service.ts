@@ -27,4 +27,17 @@ export class UserService {
     }
     return null;
   }
+
+  async findAll(): Promise<User[]> {
+    return this.userRepository.find();
+  }
+
+  async remove(id: number): Promise<void> {
+    await this.userRepository.delete(id);
+  }
+
+  async update(id: number, updateUserDto: Partial<User>): Promise<User> {
+    await this.userRepository.update(id, updateUserDto);
+    return this.userRepository.findOne({ where: { id } });
+  }
 }

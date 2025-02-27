@@ -11,6 +11,7 @@ import {
 import { MTaxTypeService } from './m_tax_type.service';
 import { MTaxType } from 'src/entities/m_tax_type.entity';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -24,6 +25,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class MTaxTypeController {
   constructor(private readonly taxTypeService: MTaxTypeService) {}
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data tax types' })
@@ -36,6 +38,7 @@ export class MTaxTypeController {
     return this.taxTypeService.getAllTaxType();
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data tax types berdasarkan ID' })
@@ -49,6 +52,7 @@ export class MTaxTypeController {
     return this.taxTypeService.getTaxTypeById(id);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data tax types baru' })
@@ -64,6 +68,7 @@ export class MTaxTypeController {
     return this.taxTypeService.createTaxType(TaxTypeData);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get('code')
   @ApiOperation({ summary: 'Ambil data tax types berdasarkan kode or nama' })
@@ -93,6 +98,7 @@ export class MTaxTypeController {
   }
 
   // Update a TaxType
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data tax types berdasarkan ID' })
@@ -111,6 +117,7 @@ export class MTaxTypeController {
   }
 
   // Delete a TaxType
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data tax types berdasarkan ID' })

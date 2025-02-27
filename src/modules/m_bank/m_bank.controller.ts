@@ -16,6 +16,7 @@ import {
   ApiParam,
   ApiResponse,
   ApiBody,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 @ApiTags('banks')
@@ -23,6 +24,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class MBankController {
   constructor(private readonly bankService: MBankService) {}
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data bank' })
@@ -35,6 +37,7 @@ export class MBankController {
     return this.bankService.getAllBanks();
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data bank berdasarkan ID' })
@@ -44,6 +47,7 @@ export class MBankController {
     return this.bankService.getBankById(id);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data bank baru' })
@@ -57,6 +61,7 @@ export class MBankController {
     return this.bankService.createBank(bankData);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get('code/:bankCode')
   @ApiOperation({ summary: 'Ambil data bank berdasarkan code' })
@@ -69,6 +74,7 @@ export class MBankController {
   }
 
   // Update a bank
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data bank berdasarkan ID' })
@@ -87,6 +93,7 @@ export class MBankController {
   }
 
   // Delete a bank
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data bank berdasarkan ID' })

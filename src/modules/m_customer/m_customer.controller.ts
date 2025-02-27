@@ -11,6 +11,7 @@ import {
 import { MCustomerService } from './m_customer.service';
 import { MCustomer } from 'src/entities/m_customer.entity';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -24,6 +25,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class MCustomerController {
   constructor(private readonly customerService: MCustomerService) {}
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data Customer' })
@@ -36,6 +38,7 @@ export class MCustomerController {
     return this.customerService.getAllCustomer();
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data customer berdasarkan ID' })
@@ -49,6 +52,7 @@ export class MCustomerController {
     return this.customerService.getCustomerById(id);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data customer baru' })
@@ -64,6 +68,7 @@ export class MCustomerController {
     return this.customerService.createCustomer(customerData);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get('code/:CustomerCode')
   @ApiOperation({ summary: 'Ambil data customer berdasarkan kode customer' })
@@ -84,6 +89,7 @@ export class MCustomerController {
   }
 
   // Update a Customer
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data customer berdasarkan ID' })
@@ -102,6 +108,7 @@ export class MCustomerController {
   }
 
   // Delete a Customer
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data customer berdasarkan ID' })

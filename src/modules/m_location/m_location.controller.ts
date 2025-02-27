@@ -11,6 +11,7 @@ import {
 import { MLocationService } from './m_location.service';
 import { MLocation } from 'src/entities/m_location.entity';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -24,6 +25,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class MLocationController {
   constructor(private readonly locationService: MLocationService) {}
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data Location' })
@@ -36,6 +38,7 @@ export class MLocationController {
     return this.locationService.getAllLocation();
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data location berdasarkan ID' })
@@ -49,6 +52,7 @@ export class MLocationController {
     return this.locationService.getLocationById(id);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data location baru' })
@@ -64,6 +68,7 @@ export class MLocationController {
     return this.locationService.createLocation(LocationData);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get('code/:LocationCode')
   @ApiOperation({ summary: 'Ambil data location berdasarkan kode location' })
@@ -80,6 +85,7 @@ export class MLocationController {
   }
 
   // Update a Location
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data location berdasarkan ID' })
@@ -98,6 +104,7 @@ export class MLocationController {
   }
 
   // Delete a Location
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data location berdasarkan ID' })

@@ -11,6 +11,7 @@ import {
 import { MSupplierService } from './m_supplier.service';
 import { MSupplier } from 'src/entities/m_supplier.entity';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -24,6 +25,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class MSupplierController {
   constructor(private readonly supplierService: MSupplierService) {}
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data supplier' })
@@ -36,6 +38,7 @@ export class MSupplierController {
     return this.supplierService.getAllSupplier();
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data supplier berdasarkan ID' })
@@ -49,6 +52,7 @@ export class MSupplierController {
     return this.supplierService.getSupplierById(id);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data supplier baru' })
@@ -64,6 +68,7 @@ export class MSupplierController {
     return this.supplierService.createSupplier(SupplierData);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get('code/:SupplierCode')
   @ApiOperation({ summary: 'Ambil data supplier berdasarkan kode supplier' })
@@ -84,6 +89,7 @@ export class MSupplierController {
   }
 
   // Update a Supplier
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data supplier berdasarkan ID' })
@@ -102,6 +108,7 @@ export class MSupplierController {
   }
 
   // Delete a Supplier
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data supplier berdasarkan ID' })

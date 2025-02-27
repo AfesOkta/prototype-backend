@@ -11,6 +11,7 @@ import {
 import { MProductService } from './m_product.service';
 import { MProduct } from 'src/entities/m_product.entity';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -24,6 +25,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class MProductController {
   constructor(private readonly productService: MProductService) {}
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data product' })
@@ -36,6 +38,7 @@ export class MProductController {
     return this.productService.getAllProduct();
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data product berdasarkan ID' })
@@ -49,6 +52,7 @@ export class MProductController {
     return this.productService.getProductById(id);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data product baru' })
@@ -64,6 +68,7 @@ export class MProductController {
     return this.productService.createProduct(ProductData);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get('code/:ProductCode')
   @ApiOperation({ summary: 'Ambil data product berdasarkan kode product' })
@@ -80,6 +85,7 @@ export class MProductController {
   }
 
   // Update a Product
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data product berdasarkan ID' })
@@ -98,6 +104,7 @@ export class MProductController {
   }
 
   // Delete a Product
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data product berdasarkan ID' })

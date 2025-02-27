@@ -11,6 +11,7 @@ import {
 import { MTaxGroupDtlService } from './m_tax_group_dtl.service';
 import { MTaxGroupDtl } from 'src/entities/m_tax_group_dtl.entity';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -24,6 +25,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class MTaxGroupDtlController {
   constructor(private readonly taxGroupDtlService: MTaxGroupDtlService) {}
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data tax group detail' })
@@ -36,6 +38,7 @@ export class MTaxGroupDtlController {
     return this.taxGroupDtlService.getAllTaxGroupDtl();
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data tax group detail berdasarkan ID' })
@@ -51,6 +54,7 @@ export class MTaxGroupDtlController {
     return this.taxGroupDtlService.getTaxGroupDtlById(id);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data tax group detail baru' })
@@ -66,6 +70,7 @@ export class MTaxGroupDtlController {
     return this.taxGroupDtlService.createTaxGroupDtl(TaxGroupDtlData);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get('code/:taxType')
   @ApiOperation({
@@ -83,6 +88,7 @@ export class MTaxGroupDtlController {
     return this.taxGroupDtlService.findTaxGroupDtlByType(taxType);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get('code/:hdr')
   @ApiOperation({
@@ -101,6 +107,7 @@ export class MTaxGroupDtlController {
   }
 
   // Update a Supplier
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data tax group detail berdasarkan ID' })
@@ -119,6 +126,7 @@ export class MTaxGroupDtlController {
   }
 
   // Delete a Supplier
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Hapus data tax group detail berdasarkan ID' })

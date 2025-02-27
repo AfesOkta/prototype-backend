@@ -16,6 +16,7 @@ import {
   ApiResponse,
   ApiOperation,
   ApiTags,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -24,6 +25,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class MTaxGroupHdrController {
   constructor(private readonly taxGroupHdrService: MTaxGroupHdrService) {}
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Ambil semua data tax group header' })
@@ -36,6 +38,7 @@ export class MTaxGroupHdrController {
     return this.taxGroupHdrService.getAllTaxGroupHdr();
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Ambil data tax group header berdasarkan ID' })
@@ -51,6 +54,7 @@ export class MTaxGroupHdrController {
     return this.taxGroupHdrService.getTaxGroupHdrById(id);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Buat data tax group header baru' })
@@ -66,6 +70,7 @@ export class MTaxGroupHdrController {
     return this.taxGroupHdrService.createTaxGroupHdr(TaxGroupHdrData);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get('code/:TaxGroupHdrCode')
   @ApiOperation({ summary: 'Ambil data tax group header berdasarkan kode' })
@@ -85,6 +90,7 @@ export class MTaxGroupHdrController {
     return this.taxGroupHdrService.getTaxGroupHdrByCode(TaxGroupHdrCode);
   }
 
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get('code')
   @ApiOperation({
@@ -116,6 +122,7 @@ export class MTaxGroupHdrController {
   }
 
   // Update a TaxGroupHdr
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Perbarui data tax group header berdasarkan ID' })
@@ -134,6 +141,7 @@ export class MTaxGroupHdrController {
   }
 
   // Delete a TaxGroupHdr
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({
