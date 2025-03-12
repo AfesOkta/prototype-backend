@@ -16,6 +16,7 @@ import { MUnitModule } from './modules/m_unit/m_unit.module';
 import { ormConfig } from './data-source';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './modules/user/user.module';
+import { TInventoryModule } from './modules/t_inventory/t_inventory.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { UserModule } from './modules/user/user.module';
     MUnitModule,
     AuthModule,
     UserModule,
+    TInventoryModule,
   ],
 })
 export class AppModule {}
