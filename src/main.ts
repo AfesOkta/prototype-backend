@@ -55,6 +55,13 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/v1/docs', app, document);
 
+  app.enableCors({
+    origin: 'http://localhost:8080', // Ganti dengan frontend yang diizinkan
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Authorization',
+    credentials: true, // Jika menggunakan cookie/session
+  });
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
