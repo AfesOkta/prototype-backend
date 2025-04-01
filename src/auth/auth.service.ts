@@ -3,15 +3,12 @@ import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/modules/user/user.service';
 import { RegisterDto } from './dto/registerDto';
 import * as bcrypt from 'bcrypt';
-import { InjectRedis } from '@nestjs-modules/ioredis';
-import Redis from 'ioredis';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-    @InjectRedis() private readonly redis: Redis,
   ) {}
 
   async validateUser(username: string, password: string): Promise<any> {
@@ -49,16 +46,5 @@ export class AuthService {
       }
       throw error;
     }
-  }
-
-  async logout(token: string): Promise<void> {
-    const tokenExpiry = 60 * 60 * 24; // 1 hari (sesuai dengan waktu JWT)
-
-    await this.redis.set(`blacklist:${token}`, '1', 'EX', tokenExpiry);
-  }
-
-  async isTokenBlacklisted(token: string): Promise<boolean> {
-    const isBlacklisted = await this.redis.get(`blacklist:${token}`);
-    return isBlacklisted !== null;
   }
 }

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { MBankModule } from './modules/m_bank/m_bank.module';
@@ -17,7 +17,6 @@ import { ormConfig } from './data-source';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { TInventoryModule } from './modules/t_inventory/t_inventory.module';
-import { JwtBlacklistMiddleware } from './auth/JwtBlacklistMiddleware';
 
 @Module({
   imports: [
@@ -27,7 +26,7 @@ import { JwtBlacklistMiddleware } from './auth/JwtBlacklistMiddleware';
     TypeOrmModule.forRootAsync({
       useFactory: async () => {
         return ormConfig;
-      }
+      },
     }),
     MBankModule,
     MCashAccountModule,
@@ -42,13 +41,8 @@ import { JwtBlacklistMiddleware } from './auth/JwtBlacklistMiddleware';
     MUnitModule,
     AuthModule,
     UserModule,
-    TInventoryModule,    
+    TInventoryModule,
   ],
 })
-// export class AppModule {}
+export class AppModule {}
 
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(JwtBlacklistMiddleware).forRoutes('*'); // Middleware untuk semua route
-  }
-}
